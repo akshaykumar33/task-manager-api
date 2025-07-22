@@ -1,0 +1,242 @@
+{
+  "info": {
+    "name": "Task Manager API (Enhanced)",
+    "_postman_id": "task-manager-api-collection",
+    "description": "A collection of requests for the Task Manager API with JWT auth and detailed sample JSON",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Akshay Patil\",\n  \"email\": \"akshay@example.com\",\n  \"password\": \"securepass123\"\n}"
+        },
+        "description": "Registers a new user with name, email, and password.",
+        "url": {
+          "raw": "http://localhost:5000/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"akshay@example.com\",\n  \"password\": \"securepass123\"\n}"
+        },
+        "description": "Login with email and password to receive a JWT token.",
+        "url": {
+          "raw": "http://localhost:5000/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject\": \"Complete backend project\",\n  \"deadline\": \"2025-07-30\",\n  \"status\": \"pending\"\n}"
+        },
+        "description": "Creates a task for the logged-in user.",
+        "url": {
+          "raw": "http://localhost:5000/tasks",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Tasks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "description": "Retrieves all non-deleted tasks for the logged-in user.",
+        "url": {
+          "raw": "http://localhost:5000/tasks",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject\": \"Updated backend flow\",\n  \"deadline\": \"2025-08-01\",\n  \"status\": \"in progress\"\n}"
+        },
+        "description": "Updates a specific task by ID.",
+        "url": {
+          "raw": "http://localhost:5000/tasks/:taskId",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks",
+            ":taskId"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "description": "Soft deletes the specified task.",
+        "url": {
+          "raw": "http://localhost:5000/tasks/:taskId",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks",
+            ":taskId"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Subtasks",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subtasks\": [\n    {\n      \"subject\": \"Write routes\",\n      \"deadline\": \"2025-07-25\",\n      \"status\": \"completed\"\n    },\n    {\n      \"subject\": \"Write tests\",\n      \"deadline\": \"2025-07-27\",\n      \"status\": \"pending\"\n    }\n  ]\n}"
+        },
+        "description": "Updates the subtasks list for a given task (excluding deleted).",
+        "url": {
+          "raw": "http://localhost:5000/tasks/:taskId/subtasks",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks",
+            ":taskId",
+            "subtasks"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Subtasks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "description": "Retrieves all non-deleted subtasks for a given task.",
+        "url": {
+          "raw": "http://localhost:5000/tasks/:taskId/subtasks",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "tasks",
+            ":taskId",
+            "subtasks"
+          ]
+        }
+      }
+    }
+  ]
+}
